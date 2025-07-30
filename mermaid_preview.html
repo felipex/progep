@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROGEP - Mermaid Diagrams Preview</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .diagram-container {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .mermaid {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>PROGEP - Django Project Diagrams</h1>
+    
+    <div class="diagram-container">
+        <h2>Project Structure</h2>
+        <div class="mermaid">
+graph TD
+    A[Django Project] --> B[django_project/]
+    A --> C[core/]
+    A --> D[manage.py]
+    
+    B --> E[settings.py]
+    B --> F[urls.py]
+    B --> G[wsgi.py]
+    B --> H[asgi.py]
+    
+    C --> I[models.py]
+    C --> J[views.py]
+    C --> K[admin.py]
+    C --> L[apps.py]
+    C --> M[migrations/]
+    
+    I --> N[Setor Model]
+    N --> O[codigo: CharField]
+    N --> P[nome: CharField]
+    N --> Q[caminho: CharField]
+    N --> R[unidade_sigla: CharField]
+    N --> S[unidade_nome: CharField]
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>Database Model Flow</h2>
+        <div class="mermaid">
+erDiagram
+    SETOR {
+        string codigo PK
+        string nome
+        string caminho
+        string unidade_sigla
+        string unidade_nome
+    }
+        </div>
+    </div>
+
+    <div class="diagram-container">
+        <h2>Application Flow</h2>
+        <div class="mermaid">
+flowchart LR
+    A[User Request] --> B[Django URLs]
+    B --> C[Views]
+    C --> D[Models]
+    D --> E[Database]
+    C --> F[Templates]
+    F --> G[Response]
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#4CAF50',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#45a049',
+                lineColor: '#666',
+                sectionBkgColor: '#f8f9fa',
+                altSectionBkgColor: '#ffffff',
+                gridColor: '#ddd',
+                secondaryColor: '#2196F3',
+                tertiaryColor: '#fff'
+            }
+        });
+    </script>
+</body>
+</html>
