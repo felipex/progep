@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import import_siorg, import_siorg2, upload_file
+from core.views import index, import_siorg, import_siorg2, upload_file, servidores
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('servidores/', servidores, name='servidores'),
+    path('', index, name='index'),
     path('import_siorg/', import_siorg, name='import_siorg'),
     path('import_siorg2/', import_siorg2, name='import_siorg2'),
     path('upload/', upload_file, name='upload_file'),

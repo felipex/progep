@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Core</title>
+   </head>
+   <body>
+      <h1>Servidores</h1>
+     
+      <div class="pagination">
+        <a href="#" class="prev">&laquo; Anterior</a>
+        <a href="#" class="next">Próximo &raquo;</a>
+      </div>
+     <form action="{% url 'servidores' %}" method="post">
+         {% csrf_token %}
+         {{ form.as_p }}
+         <button type="submit">Filtra</button>
+     </form>
+      <h2>Lista de Servidores</h2>
+     {% if servidores %}}
+      <ul>
+        {% for servidor in servidores %}
+          <li>{{ servidor.nome }} - {{ servidor.mes_ansi }} - {{ servidor.siape }}</li>
+        {% endfor %}
+      </ul>
+     {% endif %}
+     
+    </body>
+    </html>
+    

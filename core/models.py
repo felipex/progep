@@ -8,7 +8,7 @@ class Setor(models.Model):
     codigo = models.CharField(max_length=10, unique=True)
     nome = models.CharField(max_length=100)
     caminho = models.CharField(max_length=100)
-    caminho_sigla = models.CharField(max_length=100)
+    caminho_sigla = models.CharField(max_length=100, blank=True, null=True)
     unidade_sigla = models.CharField(max_length=10)
     unidade_nome = models.CharField(max_length=100)
     updated_at = models.DateTimeField(auto_now=True)
@@ -129,11 +129,12 @@ class Servidor(models.Model):
     deficiencia_fisica = models.CharField(
         db_column='DEFICIENCIA_FISICA', blank=True, max_length=100,
         null=True)  # Field name made lowercase.
-    escolaridade = models.CharField(db_column='ESCOLARIDADE',
-                                    #choices=ESCOLARIDADE_CHOICES,
-                                    blank=True,
-                                    max_length=100,
-                                    null=True)  # Field name made lowercase.
+    escolaridade = models.CharField(
+        db_column='ESCOLARIDADE',
+        #choices=ESCOLARIDADE_CHOICES,
+        blank=True,
+        max_length=100,
+        null=True)  # Field name made lowercase.
     grupo_escolaridade = models.CharField(
         db_column='GRUPO_ESCOLARIDADE', blank=True, max_length=100,
         null=True)  # Field name made lowercase.
@@ -176,7 +177,8 @@ class Servidor(models.Model):
     qtde_afastamento = models.FloatField(
         db_column='QTDE_AFASTAMENTO', blank=True,
         null=True)  # Field name made lowercase.
-    mes_ansi = models.CharField(db_column='MES_ANSI',
+    mes_ansi = models.CharField('Mês ANSI',
+                                db_column='MES_ANSI',
                                 blank=True,
                                 max_length=100,
                                 null=True)  # Field name made lowercase.
@@ -200,10 +202,23 @@ class Servidor(models.Model):
                                     max_length=100,
                                     blank=True,
                                     null=True)  # Field name made lowercase.
+    cod_afastamento = models.CharField(db_column='COD_AFASTAMENTO',
+                                       blank=True,
+                                       max_length=100,
+                                       null=True)
+    dia_inicio_afastamento = models.CharField(
+        db_column='DIA_INICIO_AFASTAMENTO',
+        blank=True,
+        max_length=10,
+        null=True)
+    dia_fim_afastamento = models.CharField(db_column='DIA_FIM_AFASTAMENTO',
+                                           blank=True,
+                                           max_length=10,
+                                           null=True)
 
-    caminho = models.CharField(max_length=100)
-    unidade_sigla = models.CharField(max_length=10)
-    unidade_nome = models.CharField(max_length=100)
+    caminho = models.CharField(max_length=100, blank=True, null=True)
+    unidade_sigla = models.CharField(max_length=10, blank=True, null=True)
+    unidade_nome = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -229,6 +244,15 @@ class Servidor2(models.Model):
         db_table = 'servidor'
 
 
+class Servidorx(models.Model):
+    nome = models.CharField(db_column='NOME', max_length=100)
+    siape = models.CharField(db_column='SIAPE', max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'servidorx'
+
+
 '''
 https://dadosabertosapi.ufca.edu.br/service/recurso/servidor_por_siape.json?siape=2656876
 
@@ -237,4 +261,8 @@ https://dadosabertosapi.ufca.edu.br/service/recurso/servidor_por_siape.json?siap
 CREATE VIEW core_servidor AS 
 SELECT * FROM servidor s, core_setor c where c.codigo = s.cod_siorg_uorg;
  core_servidor(NOME_SERVIDOR,NOME_SOCIAL_SERVIDOR,CARGO_ORIGEM,ORGAO_ORIGEM,"Unnamed:_4",ORGAO_DESTINO,"Unnamed:_6",PLANO_CARGO_ORIGEM,FUNCAO_DESTINO,NIVEL_FUNCAO_DESTINO,ID_SERVIDOR,MES,VINCULO_SERVIDOR,SITUACAO_FUNCIONAL,SITUACAO_VINCULO,COD_UORG,UORG,GRUPO_UORG,NIVEL_FUNCAO,JORNADA_TRABALHO,CARGO,DATA_INGRESSO_CARGO,SISTEMATICA_CARGO,NIVEL_CARGO,GR_NIV_CARGO,COD_CARGO,CLASSE_CARGO,SEXO,COD_ORGAO,NOME_UORG,COD_SIORG_ORGAO,COD_SIORG_UORG,COD_VAGA,DATA_NASCIMENTO_SERVIDOR,DEFICIENCIA_FISICA,ESCOLARIDADE,GRUPO_ESCOLARIDADE,COR_ORIGEM_ETNICA,GRUPO_SITUACAO_VINCULO,ANO_ING_SPUB,EXCLUSAO,DIA_NOMEACAO,DIA_OCOR_INGR_ORGAO_EV,DIA_OCOR_EXCL_SERV_EV,ATIVIDADE_FUNCAO,QTDE_VINC_SERV,QTDE_AFASTAMENTO,NOME,MES_ANSI,SIAPE,ID,CARREIRA,ESCOLARIDADE2,IDADE,FAIXA_ETARIA,"id:1",codigo,"nome:1",caminho,caminho_sigla,unidade_sigla,unidade_nome,updated_at);
+'''
+'''
+create view servidorx as
+  select distinct nome, siape from servidor order by siape;
 '''

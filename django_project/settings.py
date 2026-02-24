@@ -26,15 +26,36 @@ SECRET_KEY = 'django-insecure-4ju2n@$f9d0c=h)_g0lbb%k9&@rf(xa$d$g$&5ri$uf)*gev^4
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ["REPLIT_DOMAINS"].split(',')
+ALLOWED_HOSTS += os.environ["EXTRA_DOMAINS"].split(',')
+ALLOWED_HOSTS += [
+    'https://7f8d1489-3f7e-4049-bce2-479ff6d6096d-00-2pchj4o400rlj.worf.replit.dev'
+]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://" + domain for domain in os.environ["REPLIT_DOMAINS"].split(',')
 ]
-
+CSRF_TRUSTED_ORIGINS += [
+    "https://" + domain for domain in os.environ["EXTRA_DOMAINS"].split(',')
+]
+CSRF_TRUSTED_ORIGINS += [
+    'https://7f8d1489-3f7e-4049-bce2-479ff6d6096d-00-2pchj4o400rlj.worf.replit.dev'
+]
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    "unfold.contrib.location_field",  # optional, if django-location-field package is used
+    "unfold.contrib.constance",  # optional, if django-constance package is used
+    "django.contrib.admin",  # required
     'core.apps.CoreConfig',
-    'django.contrib.admin',
+
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

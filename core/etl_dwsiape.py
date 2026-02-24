@@ -1,5 +1,8 @@
 from datetime import date, datetime
 import pandas as pd
+"""
+Este módulo contém funções para realizar operações de ETL (Extrair, Transformar, Carregar) do DWSIAPE,.
+"""
 
 
 def open_file(filename, encoding='utf-8', skiproww=2, sep=';'):
@@ -29,7 +32,7 @@ def change_columns_name(df):
 def change_month(month):
   months = {
       'Jan': '01',
-      'Fef': '02',
+      'Fev': '02',
       'Mar': '03',
       'Abr': '04',
       'Mai': '05',
@@ -111,6 +114,9 @@ def transform_escolaridade(df):
       lambda row: 'GRADUAÇÃO'
       if row['ESCOLARIDADE2'].startswith('GRADUACAO') else row['ESCOLARIDADE'],
       axis=1)
+  df['ESCOLARIDADE'] = df.apply(lambda row: 'GRADUAÇÃO' if row[
+      'ESCOLARIDADE2'].startswith('APERFEICOAMENTO') else row['ESCOLARIDADE'],
+                                axis=1)
 
 
 def transform_nome_social(df):
@@ -213,11 +219,13 @@ def extract_data(old_df):
   return df
 
 
-def etl_dwsiape(connection,
-                filename='',
-                encoding='utf-8',
-                skiproww=2,
-                sep=';'):
+def etl_dwsiape(
+    connection,
+    filename='',
+    #encoding='utf-8',
+    encoding='utf-16le',
+    skiproww=2,
+    sep=';'):
   df = open_file(filename, encoding, skiproww, sep)
   change_columns_name(df)
   df = clean_data(df)
@@ -232,7 +240,7 @@ def etl_dwsiape(connection,
       'NOME',
       #'UNIDADE_TIPO',
   ]])
-  df.to_sql('servidor', connection, if_exists='append', index=False)
+  df.to_sql('servidor', connection, if_exists='replace', index=False)
 
 
 '''
